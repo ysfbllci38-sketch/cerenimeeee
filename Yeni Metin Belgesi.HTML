@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevgiliye Özel Sürpriz Web</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 20px;
+        }
+        #ana-metin {
+            margin-bottom: 30px;
+            min-height: 100px; /* Metin değişiminde sıçramayı önlemek için */
+        }
+        .buton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            margin: 5px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .ana-buton {
+            background-color: #ff6f61; /* Açık Kırmızı */
+            color: white;
+            font-weight: bold;
+        }
+        .ana-buton:hover {
+            background-color: #e65c50;
+            transform: scale(1.05);
+        }
+        .secenek-buton {
+            background-color: #4CAF50; /* Yeşil */
+            color: white;
+        }
+        .secenek-buton:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ana-metin" style="font-size: 18px;">Başlamak için tıkla!</div>
+
+    <button id="ana-buton" class="buton ana-buton">Başlat!</button>
+
+    <div id="secenek-alani" class="hidden">
+        <button id="secenek-1-btn" class="buton secenek-buton">Bir şey soracağım...</button>
+        <button id="secenek-2-btn" class="buton secenek-buton">Bir şey diyeceğim...</button>
+    </div>
+
+    <script>
+        let adim = 0;
+        const anaMetin = document.getElementById('ana-metin');
+        const anaButon = document.getElementById('ana-buton');
+        const secenekAlani = document.getElementById('secenek-alani');
+        const secenek1Btn = document.getElementById('secenek-1-btn');
+        const secenek2Btn = document.getElementById('secenek-2-btn');
+
+        function guncelleArayuz() {
+            if (adim === 0) {
+                // Adım 0: İlk tıklama
+                anaMetin.innerHTML = "Merhaba Güzellik";
+                anaMetin.style.fontSize = "24px";
+                anaMetin.style.fontWeight = "bold";
+                adim = 1;
+            } else if (adim === 1) {
+                // Adım 1: İki seçenekli menü
+                anaMetin.innerHTML = "Seçeneklerden birini seç:";
+                anaMetin.style.fontSize = "16px";
+                anaMetin.style.fontWeight = "normal";
+                
+                anaButon.classList.add('hidden'); // Ana butonu gizle
+                secenekAlani.classList.remove('hidden'); // Seçenekleri göster
+                
+                adim = 2;
+            } else if (adim === 2) {
+                // Adım 2: Uzaklık mesajı (Alt butonlara tıklandıktan sonra)
+                anaMetin.innerHTML = "Bu uzaklık çok olmadı mı kral? 😭<br>Çok özledim seni...";
+                anaMetin.style.fontSize = "20px";
+                anaMetin.style.fontStyle = "italic";
+                anaMetin.style.color = "blue";
+                
+                secenekAlani.classList.add('hidden'); // Seçenekleri gizle
+                anaButon.innerHTML = "Sürprizin Sonu (Tıkla!)";
+                anaButon.classList.remove('hidden'); // Ana butonu geri getir
+                
+                adim = 3;
+                
+            } else if (adim === 3) {
+                // Adım 3: Kalpler ve son mesaj
+                const kalpler = "💖".repeat(50);
+                anaMetin.innerHTML = kalpler + "<br><br>Seni çok seviyorum Ceren!<br><br>" + kalpler;
+                anaMetin.style.fontSize = "30px";
+                anaMetin.style.fontWeight = "bold";
+                anaMetin.style.color = "red";
+                anaMetin.style.fontStyle = "normal";
+
+                anaButon.classList.add('hidden'); // Butonu kaldır
+                alert("Sürpriz tamamlandı! 😊"); // messagebox yerine alert
+                adim = 4;
+            }
+        }
+
+        function secenekTiklandi() {
+            // Seçimden bağımsız olarak Adım 2 içeriğini gösteren fonksiyona geç
+            if (adim === 2) {
+                guncelleArayuz(); 
+            }
+        }
+        
+        // Olay dinleyicilerini tanımla
+        anaButon.addEventListener('click', guncelleArayuz);
+        secenek1Btn.addEventListener('click', secenekTiklandi);
+        secenek2Btn.addEventListener('click', secenekTiklandi);
+
+    </script>
+</body>
+</html>
